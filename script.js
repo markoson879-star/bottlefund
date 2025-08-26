@@ -1,27 +1,39 @@
-let current = 24;
 const goal = 500;
 
-function addAmount() {
-  let input = prompt("Введите сумму для добавления:");
-  if (!input) return;
-  let value = parseInt(input);
-  if (isNaN(value) || value <= 0) {
-    alert("Введите положительное число!");
-    return;
-  }
-  current += value;
-  if (current > goal) current = goal;
+// читаем сохранённое значение или ставим стартовое 24
+let current = parseInt(localStorage.getItem("bottleProgress") || "24", 10);
 
+function updateUI() {
   document.getElementById("progress-text").textContent = current + " / " + goal;
   document.getElementById("progress-fill").style.width = (current / goal * 100) + "%";
-
-  spawnCoin();
 }
 
-function spawnCoin() {
+function saveProgress() {
+  localStorage.setItem("bottleProgress", current);
+}
+
+function addAmount() {
+  let input = document.getElementById("inputAmount");
+  let value = parseInt(input.value, 10);
+  if (!isNaN(value) && value > 0) {
+    current += value;
+    if (current > goal) current = goal;
+    saveProgress();
+    updateUI();
+    dropCoin();
+    input.value = "";
+  }
+}
+
+function dropCoin() {
+  const bottle = document.querySelector(".bottle");
   const coin = document.createElement("div");
-  coin.className = "coin";
-  coin.style.left = Math.random() * 80 + "px";
-  document.getElementById("coins").appendChild(coin);
+  coin.classList.add("coin");
+  coin.style.left = Math.random() * 80 + "%";
+  bottle.appendChild(coin);
   setTimeout(() => coin.remove(), 2000);
 }
+
+document.getElementById("addButton").addEventListener("click", addAmount);
+
+updateUI();

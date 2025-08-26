@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BottleFund</title>
   <link rel="stylesheet" href="style.css">
-<link rel="manifest" href="manifest.json">
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-  }
-</script>
-
+  <link rel="manifest" href="manifest.json">
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
 </head>
 <body>
   <div class="container">
@@ -20,12 +19,13 @@
       <div class="coins" id="coins"></div>
     </div>
     <div class="progress-container">
-      <div id="progress-text">24 / 500</div>
+      <div id="progress-text">0 / 500</div>
       <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill" style="width: 4.8%;"></div>
+        <div class="progress-fill" id="progress-fill"></div>
       </div>
     </div>
-    <button onclick="addAmount()">+ Добавить</button>
+    <input type="number" id="inputAmount" placeholder="Сумма" />
+    <button id="addButton">+ Добавить</button>
   </div>
   <script src="script.js"></script>
 </body>
