@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BottleFund</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("service-worker.js");
-    }
-  </script>
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Манифест и иконка -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" href="icon.png" />
+
+  <meta name="theme-color" content="#000000" />
 </head>
 <body>
   <div class="container">
-    <h1>BottleFund</h1>
-    <div class="bottle">
-      <div class="coins" id="coins"></div>
-    </div>
+    <h1>Моя цель:</h1>
+    <h2>Поездка в Берлин</h2>
+
+    <!-- Картинка -->
+    <img src="berlin.png" alt="Berlin" />
+
+    <!-- Прогресс -->
+    <div id="progress">0 ₪ / 500 ₪</div>
     <div class="progress-container">
-      <div id="progress-text">0 / 500</div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
-      </div>
+      <div id="progress-bar" class="progress-bar"></div>
     </div>
-    <input type="number" id="inputAmount" placeholder="Сумма" />
-    <button id="addButton">+ Добавить</button>
+
+    <!-- Ввод суммы -->
+    <input type="number" id="amount" placeholder="Сумма" min="1" />
+    <br />
+    <button id="add-btn">+ Добавить</button>
   </div>
+
+  <!-- Скрипт -->
   <script src="script.js"></script>
 </body>
 </html>
