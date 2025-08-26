@@ -2,39 +2,48 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BottleFund</title>
 
-  <!-- Стили -->
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Манифест и иконка -->
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/png" href="icon.png" />
-
   <meta name="theme-color" content="#000000" />
+
+  <script>
+    // Регистрация SW для офлайна
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js");
+      });
+    }
+  </script>
 </head>
 <body>
-  <div class="container">
-    <h1>Моя цель:</h1>
+  <main class="container">
+    <h1>Моя цель</h1>
     <h2>Поездка в Берлин</h2>
 
-    <!-- Картинка -->
-    <img src="berlin.png" alt="Berlin" />
-
-    <!-- Прогресс -->
-    <div id="progress">0 ₪ / 500 ₪</div>
-    <div class="progress-container">
-      <div id="progress-bar" class="progress-bar"></div>
+    <!-- Бутылка с картинкой -->
+    <div class="bottle-wrap">
+      <img src="berlin.png" alt="Berlin bottle" class="bottle-img" />
     </div>
 
-    <!-- Ввод суммы -->
-    <input type="number" id="amount" placeholder="Сумма" min="1" />
-    <br />
-    <button id="add-btn">+ Добавить</button>
-  </div>
+    <!-- Прогресс -->
+    <div class="progress-readout">
+      <span id="progressText">0 / 500 ₪</span>
+    </div>
+    <div class="progress-outer" aria-label="Прогресс к цели">
+      <div id="progressFill" class="progress-fill"></div>
+    </div>
 
-  <!-- Скрипт -->
-  <script src="script.js"></script>
+    <!-- Ввод и кнопка -->
+    <div class="controls">
+      <input id="amount" type="number" inputmode="numeric" min="1" placeholder="Сумма (₪)" />
+      <button id="addBtn" type="button">+ Добавить</button>
+    </div>
+  </main>
+
+  <script src="script.js" defer></script>
 </body>
 </html>

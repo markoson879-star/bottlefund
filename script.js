@@ -1,30 +1,51 @@
-const goal = 500;
+// Настройки цели
+const GOAL = 500;
 
-// загружаем сохранённый прогресс или ставим стартовые 24
-let current = parseInt(localStorage.getItem("bottleProgress") || "24", 10);
+// Элементы
+const progressTextEl = document.getElementById("progressText");
+const progressFillEl = document.getElementById("progressFill");
+const amountEl = document.getElementById("amount");
+const addBtn = document.getElementById("addBtn");
 
-const progressEl = document.getElementById("progress");
-const barEl = document.getElementById("progress-bar");
-const addBtn = document.getElementById("add-btn");
-const inputEl = document.getElementById("amount");
+// Прогресс — читаем из localStorage, иначе старт = 24
+let current = (() => {
+  const saved = localStorage.getItem("bottlefund_progress");
+  const n = Number.parseInt(saved ?? "24", 10);
+  return Number.isFinite(n) && n >= 0 ? n : 24;
+})();
 
-// функция обновления интерфейса
-function updateProgress() {
-  progressEl.textContent = `${current} ₪ / ${goal} ₪`;
-  const percent = (current / goal) * 100;
-  barEl.style.width = percent + "%";
-  localStorage.setItem("bottleProgress", current); // сохраняем
+// Обновление интерфейса
+function render() {
+  const clamped = Math.min(current, GOAL);
+  const percent = Math.max(0, Math.min((clamped / GOAL) * 100, 100));
+  progressTextEl.textContent = `${clamped} / ${GOAL} ₪`;
+  progressFillEl.style.width = `${percent}%`;
 }
 
-// обработчик кнопки
-addBtn.addEventListener("click", () => {
-  const amount = parseInt(inputEl.value, 10);
-  if (!isNaN(amount) && amount > 0) {
-    current += amount;
-    inputEl.value = "";
-    updateProgress();
+// Сохранение
+function persist() {
+  localStorage.setItem("bottlefund_progress", String(current));
+}
+
+// Добавление суммы
+function addAmount() {
+  const val = Number.parseInt(amountEl.value, 10);
+  if (!Number.isFinite(val) || val <= 0) {
+    amountEl.focus();
+    return;
   }
+  current = Math.min(current + val, GOAL);
+  persist();
+  render();
+  amountEl.value = "";
+  amountEl.focus();
+}
+
+// События
+addBtn.addEventListener("click", addAmount);
+amountEl.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") addAmount();
 });
 
-// начальная отрисовка
-updateProgress();
+// Первичная отрисовка
+render();
