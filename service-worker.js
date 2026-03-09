@@ -1,13 +1,14 @@
-const CACHE_NAME = "bottlefund-cache-v2";
+const CACHE_NAME = "bottlefund-cache-v4";
 const ASSETS = [
   "./",
   "./index.html",
   "./stock.html",
-  "./style.css?v=2",
-  "./script.js?v=2",
-  "./manifest.json?v=2",
+  "./style.css?v=4",
+  "./script.js?v=4",
+  "./manifest.json?v=4",
   "./icon.png",
-  "./berlin.png"
+  "./berlin.png",
+  "./stock.png"
 ];
 
 self.addEventListener("install", (event) => {
