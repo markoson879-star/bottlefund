@@ -1,11 +1,11 @@
-// Простой cache-first для офлайна
-const CACHE_NAME = "bottlefund-cache-v1";
+const CACHE_NAME = "bottlefund-cache-v2";
 const ASSETS = [
   "./",
   "./index.html",
-  "./style.css",
-  "./script.js",
-  "./manifest.json",
+  "./stock.html",
+  "./style.css?v=2",
+  "./script.js?v=2",
+  "./manifest.json?v=2",
   "./icon.png",
   "./berlin.png"
 ];
@@ -28,6 +28,6 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((cached) => cached || fetch(event.request))
+    caches.match(event.request, { ignoreSearch: true }).then((cached) => cached || fetch(event.request))
   );
 });

@@ -1,40 +1,50 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BottleFund</title>
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BottleFund</title>
+
+  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="manifest" href="manifest.json?v=2" />
+  <link rel="icon" type="image/png" href="icon.png" />
+  <meta name="theme-color" content="#000000" />
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js?v=2");
+      });
+    }
+  </script>
 </head>
 <body>
+  <nav class="top-nav">
+    <a href="index.html" class="nav-link active">✈️ Берлин</a>
+    <a href="stock.html" class="nav-link">📈 Купить акцию</a>
+  </nav>
 
-<nav class="menu">
-<a href="index.html">✈️ Берлин</a>
-<a href="stock.html">📈 Купить акцию</a>
-</nav>
+  <main class="container">
+    <h1>Моя цель</h1>
+    <h2>Поездка в Берлин</h2>
 
-<div class="container">
-<h1>BottleFund</h1>
-<h2>Поездка в Берлин</h2>
+    <div class="bottle-wrap">
+      <img src="berlin.png" alt="Berlin bottle" class="bottle-img" />
+    </div>
 
-<img src="berlin.png" class="main-img">
+    <div class="progress-readout">
+      <span id="progressText">0 / 500 ₪</span>
+    </div>
+    <div class="progress-outer" aria-label="Прогресс к цели">
+      <div id="progressFill" class="progress-fill"></div>
+    </div>
 
-<div class="progress-text">
-<span id="progressText">0 / 500 бутылок</span>
-</div>
+    <div class="controls">
+      <input id="amount" type="number" inputmode="numeric" min="1" placeholder="Сумма (₪)" />
+      <button id="addBtn" type="button">+ Добавить</button>
+    </div>
+  </main>
 
-<div class="progress-bar">
-<div id="progressFill"></div>
-</div>
-
-<div class="controls">
-<input id="amount" type="number" placeholder="Бутылки">
-<button onclick="addBottle()">Добавить</button>
-</div>
-
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js?v=2" defer></script>
 </body>
 </html>

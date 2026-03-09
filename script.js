@@ -1,47 +1,57 @@
-let bottles = localStorage.getItem(location.pathname) || 0
-bottles = Number(bottles)
+const path = location.pathname.toLowerCase();
 
-const text = document.getElementById("progressText")
-const fill = document.getElementById("progressFill")
+const CONFIG = path.includes("stock")
+  ? {
+      goal: 1000,
+      key: "bottlefund_stock_progress",
+      defaultValue: 0,
+      label: "бутылок"
+    }
+  : {
+      goal: 500,
+      key: "bottlefund_progress",
+      defaultValue: 24,
+      label: "₪"
+    };
 
-let goal = 500
+const progressTextEl = document.getElementById("progressText");
+const progressFillEl = document.getElementById("progressFill");
+const amountEl = document.getElementById("amount");
+const addBtn = document.getElementById("addBtn");
 
-if(location.pathname.includes("stock")){
-goal = 1000
+let current = (() => {
+  const saved = localStorage.getItem(CONFIG.key);
+  const n = Number.parseInt(saved ?? String(CONFIG.defaultValue), 10);
+  return Number.isFinite(n) && n >= 0 ? n : CONFIG.defaultValue;
+})();
+
+function render() {
+  const clamped = Math.min(current, CONFIG.goal);
+  const percent = Math.max(0, Math.min((clamped / CONFIG.goal) * 100, 100));
+  progressTextEl.textContent = `${clamped} / ${CONFIG.goal} ${CONFIG.label}`;
+  progressFillEl.style.width = `${percent}%`;
 }
 
-function update(){
-
-text.innerText = bottles + " / " + goal + " бутылок"
-
-let percent = bottles/goal*100
-
-if(percent > 100){
-percent = 100
+function persist() {
+  localStorage.setItem(CONFIG.key, String(current));
 }
 
-fill.style.width = percent + "%"
-
-localStorage.setItem(location.pathname,bottles)
-
+function addAmount() {
+  const val = Number.parseInt(amountEl.value, 10);
+  if (!Number.isFinite(val) || val <= 0) {
+    amountEl.focus();
+    return;
+  }
+  current = Math.min(current + val, CONFIG.goal);
+  persist();
+  render();
+  amountEl.value = "";
+  amountEl.focus();
 }
 
-function addBottle(){
+addBtn.addEventListener("click", addAmount);
+amountEl.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") addAmount();
+});
 
-const input = document.getElementById("amount")
-
-let value = Number(input.value)
-
-if(!value){
-return
-}
-
-bottles += value
-
-input.value = ""
-
-update()
-
-}
-
-update()
+render();
