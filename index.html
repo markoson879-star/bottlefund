@@ -1,52 +1,40 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BottleFund — Берлин</title>
-
-  <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" type="image/png" href="icon.png" />
-  <meta name="theme-color" content="#000000" />
-
-  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./service-worker.js");
-      });
-    }
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BottleFund</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="icon.png">
 </head>
 <body>
-  <main class="container" data-goal="500" data-unit="₪" data-storage-key="bottlefund_progress_berlin" data-start="24">
-    <nav class="top-nav" aria-label="Цели BottleFund">
-      <a href="index.html" class="nav-link active">✈️ Берлин</a>
-      <a href="stock.html" class="nav-link">📈 Купить акцию</a>
-    </nav>
 
-    <h1>Моя цель</h1>
-    <h2>Поездка в Берлин</h2>
+<nav class="menu">
+<a href="index.html">✈️ Берлин</a>
+<a href="stock.html">📈 Купить акцию</a>
+</nav>
 
-    <div class="bottle-wrap">
-      <img src="berlin.png" alt="Berlin bottle" class="bottle-img" />
-    </div>
+<div class="container">
+<h1>BottleFund</h1>
+<h2>Поездка в Берлин</h2>
 
-    <div class="progress-readout">
-      <span id="progressText">0 / 500 ₪</span>
-    </div>
-    <div class="progress-outer" aria-label="Прогресс к цели">
-      <div id="progressFill" class="progress-fill"></div>
-    </div>
+<img src="berlin.png" class="main-img">
 
-    <div class="controls">
-      <input id="amount" type="number" inputmode="numeric" min="1" placeholder="Сумма (₪)" />
-      <button id="addBtn" type="button">+ Добавить</button>
-    </div>
+<div class="progress-text">
+<span id="progressText">0 / 500 бутылок</span>
+</div>
 
-    <p class="goal-note">Первая цель BottleFund</p>
-  </main>
+<div class="progress-bar">
+<div id="progressFill"></div>
+</div>
 
-  <script src="script.js" defer></script>
+<div class="controls">
+<input id="amount" type="number" placeholder="Бутылки">
+<button onclick="addBottle()">Добавить</button>
+</div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

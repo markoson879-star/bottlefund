@@ -1,47 +1,47 @@
-const app = document.querySelector('.container');
-const GOAL = Number(app?.dataset.goal || 500);
-const UNIT = app?.dataset.unit || '₪';
-const STORAGE_KEY = app?.dataset.storageKey || 'bottlefund_progress';
-const START_VALUE = Number(app?.dataset.start || 0);
+let bottles = localStorage.getItem(location.pathname) || 0
+bottles = Number(bottles)
 
-const progressTextEl = document.getElementById('progressText');
-const progressFillEl = document.getElementById('progressFill');
-const amountEl = document.getElementById('amount');
-const addBtn = document.getElementById('addBtn');
+const text = document.getElementById("progressText")
+const fill = document.getElementById("progressFill")
 
-let current = (() => {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  const n = Number.parseInt(saved ?? String(START_VALUE), 10);
-  return Number.isFinite(n) && n >= 0 ? n : START_VALUE;
-})();
+let goal = 500
 
-function render() {
-  const clamped = Math.min(current, GOAL);
-  const percent = Math.max(0, Math.min((clamped / GOAL) * 100, 100));
-  progressTextEl.textContent = `${clamped} / ${GOAL} ${UNIT}`;
-  progressFillEl.style.width = `${percent}%`;
+if(location.pathname.includes("stock")){
+goal = 1000
 }
 
-function persist() {
-  localStorage.setItem(STORAGE_KEY, String(current));
+function update(){
+
+text.innerText = bottles + " / " + goal + " бутылок"
+
+let percent = bottles/goal*100
+
+if(percent > 100){
+percent = 100
 }
 
-function addAmount() {
-  const val = Number.parseInt(amountEl.value, 10);
-  if (!Number.isFinite(val) || val <= 0) {
-    amountEl.focus();
-    return;
-  }
-  current = Math.min(current + val, GOAL);
-  persist();
-  render();
-  amountEl.value = '';
-  amountEl.focus();
+fill.style.width = percent + "%"
+
+localStorage.setItem(location.pathname,bottles)
+
 }
 
-addBtn?.addEventListener('click', addAmount);
-amountEl?.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') addAmount();
-});
+function addBottle(){
 
-render();
+const input = document.getElementById("amount")
+
+let value = Number(input.value)
+
+if(!value){
+return
+}
+
+bottles += value
+
+input.value = ""
+
+update()
+
+}
+
+update()

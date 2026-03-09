@@ -1,65 +1,39 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BottleFund — 1000 бутылок</title>
-
-  <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" type="image/png" href="icon.png" />
-  <meta name="theme-color" content="#000000" />
-
-  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./service-worker.js");
-      });
-    }
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1000 бутылок → акция</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="container" data-goal="1000" data-unit="бутылок" data-storage-key="bottlefund_progress_stock" data-start="0">
-    <nav class="top-nav" aria-label="Цели BottleFund">
-      <a href="index.html" class="nav-link">✈️ Берлин</a>
-      <a href="stock.html" class="nav-link active">📈 Купить акцию</a>
-    </nav>
 
-    <h1>Моя цель</h1>
-    <h2>Собрать 1000 бутылок</h2>
+<nav class="menu">
+<a href="index.html">✈️ Берлин</a>
+<a href="stock.html">📈 Купить акцию</a>
+</nav>
 
-    <div class="goal-card stock-goal-card">
-      <div class="goal-emoji">🍾 → 📈</div>
-      <div class="goal-title">Моя цель — купить акцию</div>
-      <div class="goal-subtitle">Каждая бутылка приближает меня к первой акции</div>
-    </div>
+<div class="container">
+<h1>Инвестиционная цель</h1>
+<h2>1000 бутылок → акция</h2>
 
-    <div class="progress-readout">
-      <span id="progressText">0 / 1000 бутылок</span>
-    </div>
-    <div class="progress-outer" aria-label="Прогресс к цели">
-      <div id="progressFill" class="progress-fill"></div>
-    </div>
+<img src="icon.png" class="main-img">
 
-    <div class="controls">
-      <input id="amount" type="number" inputmode="numeric" min="1" placeholder="Сколько бутылок" />
-      <button id="addBtn" type="button">+ Добавить</button>
-    </div>
+<div class="progress-text">
+<span id="progressText">0 / 1000 бутылок</span>
+</div>
 
-    <div class="stats-row">
-      <div class="mini-stat">
-        <span class="mini-stat-label">Цель</span>
-        <strong>1000</strong>
-      </div>
-      <div class="mini-stat">
-        <span class="mini-stat-label">Награда</span>
-        <strong>1 акция</strong>
-      </div>
-    </div>
+<div class="progress-bar">
+<div id="progressFill"></div>
+</div>
 
-    <p class="goal-note">Новая инвестиционная цель BottleFund</p>
-  </main>
+<div class="controls">
+<input id="amount" type="number" placeholder="Бутылки">
+<button onclick="addBottle()">Добавить</button>
+</div>
 
-  <script src="script.js" defer></script>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
